@@ -13,8 +13,35 @@ class Termino {
   }
 }
 
+function contarUnos(numero) {
+  var contador = 0;
+  while (numero) {
+    numero &= (numero-1);
+    contador++;
+  }
+  return contador;
+}
+
 function quineMcCluskey(terminos) {
-  let t1 = new Termino([1,2],[1],false);
-  t1.addMatchPair(3);
-  alert(t1.match_pair);
+  var terms = [] // sera un arreglo de grupos de terminos
+                    // dependiendo su numero de unos
+  for (var i = 0; i < terminos.length; i++) {
+    let pos = contarUnos(terminos[i])
+    document.getElementById('solved').innerHTML+="i: "+i+" pos= "+pos+"  termino:"+terminos[i]+"<br>"
+
+    if(terms[pos] == null){
+      terms[pos]=[]
+      terms[pos].push(terminos[i])
+    }else {
+      terms[pos].push(terminos[i])
+    }
+    console.log(terms)
+  }
+  for (var i = 0; i < terms.length; i++) {
+    if (terms[i] != null) {
+      for (var j = 0; j < terms[i].length; j++) {
+        document.getElementById('solved').innerHTML += "terms["+i+"]["+j+"]: "+terms[i][j]+"<br>"
+      }
+    }
+  }
 }
