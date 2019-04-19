@@ -1,47 +1,39 @@
-class Termino {
-  constructor(match_pair,fp,used) {
-    this.match_pair = match_pair;
-    this.fp = fp;
-    this.used = used;
-  }
-
-  addMatchPair(item){
-    this.match_pair.push(item);
-  }
-  addFp(item){
-    this.fp.push(item);
-  }
-}
-
-function contarUnos(numero) {
-  var contador = 0;
-  while (numero) {
-    numero &= (numero-1);
-    contador++;
-  }
-  return contador;
-}
-
 function quineMcCluskey(terminos) {
   var terms = [] // sera un arreglo de grupos de terminos
-                    // dependiendo su numero de unos
+
+  /************* CREANDO LOS GRUPOS INICIALES ***********************/
   for (var i = 0; i < terminos.length; i++) {
     let pos = contarUnos(terminos[i])
-    document.getElementById('solved').innerHTML+="i: "+i+" pos= "+pos+"  termino:"+terminos[i]+"<br>"
+    document.getElementById('solved').innerHTML+="i: "+i+" pos= "+pos+"  termino:"+terminos[i]+"<br>" //quitar
 
     if(terms[pos] == null){
       terms[pos]=[]
-      terms[pos].push(terminos[i])
+      let t = new Termino()
+      t.addMatchPair(terminos[i])
+      terms[pos].push(t)
     }else {
-      terms[pos].push(terminos[i])
+      let t = new Termino()
+      t.addMatchPair(terminos[i])
+      terms[pos].push(t)
     }
-    console.log(terms)
+    console.log(terms) //quitar
   }
-  for (var i = 0; i < terms.length; i++) {
-    if (terms[i] != null) {
+
+  /* Obteniendo implicantes primos */
+  var tmp_terms = []
+
+  for (var i = 0; i < terms.length-1; i++) {
+    if( terms[i] != null){
       for (var j = 0; j < terms[i].length; j++) {
-        document.getElementById('solved').innerHTML += "terms["+i+"]["+j+"]: "+terms[i][j]+"<br>"
+        let diff = terms[i+1][j].match_pair[0]-terms[i][j].match_pair[0];
+        if (esPotencia2(diff)) {
+          //unir los terminos
+        }
       }
     }
   }
+
+
+
+
 }

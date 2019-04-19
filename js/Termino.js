@@ -21,3 +21,7 @@ function contarUnos(numero) {
   }
   return contador;
 }
+
+function esPotencia2(n) {
+	return n && (n & (n - 1)) === 0;
+}
