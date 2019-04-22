@@ -1,10 +1,11 @@
 function quineMcCluskey(terminos) {
   var terms = [] // sera un arreglo de grupos de terminos
 
-  /************* CREANDO LOS GRUPOS INICIALES ***********************/
+  /************* CREANDO LOS GRUPOS INICIALES *******************/
   for (var i = 0; i < terminos.length; i++) {
     let pos = contarUnos(terminos[i])
-    document.getElementById('solved').innerHTML+="i: "+i+" pos= "+pos+"  termino:"+terminos[i]+"<br>" //quitar
+
+    console.log("i: "+i+" pos= "+pos+"  termino:"+terminos[i]);//quitar
 
     if(terms[pos] == null){
       terms[pos]=[]
@@ -16,7 +17,7 @@ function quineMcCluskey(terminos) {
       t.addMatchPair(terminos[i])
       terms[pos].push(t)
     }
-    console.log(terms) //quitar
+    console.log("terms: ",terms) //quitar
   }
 
   /* Obteniendo implicantes primos */
