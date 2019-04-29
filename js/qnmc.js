@@ -54,4 +54,35 @@ function quineMcCluskey(terminos) {
   iterations.push(item)
   console.log(iterations[1])
 
+  /* Clear array 'cause is saved in iterations */
+  item = [];
+
+  for(var i = 0 ; i < iterations[1].length-1 ; i++){
+    if(iterations[1][i] != null){
+      for( var j = 0 ; j < iterations[1][i].length ; j++ ){
+        for(var k = 0 ; k < iterations[1][i+1].length; k++ ){
+          let termino1 = iterations[1][i][j].match_pair[0];
+          let termino2 = iterations[1][i][j].match_pair[1];
+          let termino3 = iterations[1][i+1][k].match_pair[0];
+          let termino4 = iterations[1][i+1][k].match_pair[1];
+          let diff1 = termino3 - termino1;
+          let diff2 = termino4 - termino2;
+          if(esPotencia2(diff1) && esPotencia2(diff2)){
+            let t = new Termino();
+            t.addMatchPair(termino1);
+            t.addMatchPair(termino2);
+            t.addMatchPair(termino3);
+            t.addMatchPair(termino4);
+            t.addFp(Math.abs(diff1));
+            t.addFp(Math.abs(diff2));
+            /* i is the position of new term in new iteration*/
+            addTerm(t,item,i);
+          }  
+        }
+      }
+    }
+  }
+  console.log(item)
+
+
 }
