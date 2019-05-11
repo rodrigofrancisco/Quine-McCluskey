@@ -74,20 +74,9 @@ function quineMcCluskey(terminos) {
       for( var j = 0 ; j < buffer[i].length ; j++ ){
         for(var k = 0 ; k < buffer[i+1].length; k++ ){
           if (fp_equals(buffer[i][j].fp,buffer[i+1][k].fp)) {
-            let termino1 = buffer[i][j].mp[0];
-            let termino2 = buffer[i][j].mp[1];
-            let termino3 = buffer[i+1][k].mp[0];
-            let termino4 = buffer[i+1][k].mp[1];
-            let diff1 = termino3-termino1
-            let diff2 = termino4-termino2
-            if (esPotencia2(diff1) && esPotencia2(diff2) && diff1==diff2) {
+            if (diffPotencia2(buffer[i][j].mp,buffer[i+1][k].mp)) {
               let t = new Termino();
-              t.add_mp(termino1);
-              t.add_mp(termino2);
-              t.add_mp(termino3);
-              t.add_mp(termino4);
-              t.add_fp(diff1);
-              t.add_fp(diff2);
+              t.mp = buffer[i][j].mp.concat(buffer[i+1][k].mp)
               /* i is the position of new term in new iteration*/
               addTerm(t,item,i);
             }
