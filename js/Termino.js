@@ -1,14 +1,15 @@
 class Termino {
+
   constructor() {
-    this.match_pair = [];
+    this.mp = [];
     this.fp = [];
     this.used = false;
   }
 
-  addMatchPair(item){
-    this.match_pair.push(item);
+  add_mp(item){
+    this.mp.push(item);
   }
-  addFp(item){
+  add_fp(item){
     this.fp.push(item);
   }
 }
