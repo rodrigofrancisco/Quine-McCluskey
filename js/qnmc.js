@@ -26,7 +26,7 @@ function quineMcCluskey(terminos) {
       for( var j = 0 ; j < item[i].length ; j++ )
         for(var k = 0 ; k < item[i+1].length; k++ )
           if (fp_equals(item[i][j].fp,item[i+1][k].fp)
-            && diffPotencia2(item[i][j].mp,item[i+1][k].mp)) {
+            && diffsPotencia2(item[i][j].mp,item[i+1][k].mp)) {
             item[i][j].used = true;
             item[i+1][k].used = true;
 
@@ -39,13 +39,15 @@ function quineMcCluskey(terminos) {
             /* i is the position of new term in new iteration*/
             addTerm(t,buffer,i);
           }
+
     if (buffer.length > 0) {
       iterations.push(buffer);
       it++;
       //console.log(iterations[it]);
-    }else {
-      flag = true;
-    }
+    }else flag = true;
+
   }
-  console.log(iterations);
+  //console.log(iterations);
+  ipe = searchForIPE(iterations);
+  console.log(ipe);
 }

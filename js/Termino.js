@@ -45,7 +45,7 @@ function fp_equals(fp1,fp2) {
   return true;
 }
 
-function diffPotencia2(mp1,mp2) {
+function diffsPotencia2(mp1,mp2) {
   diff = []
   for (let i = 0; i < mp1.length; i++) {
     diff.push(mp2[i] - mp1[i])
@@ -57,4 +57,13 @@ function diffPotencia2(mp1,mp2) {
     return true;
   else
     return false;
+}
+
+function searchForIPE(iterations) {
+  let ipe = [];
+  for (var x in iterations)
+    for (var y in iterations[x])
+      for (var z in iterations[x][y])
+        console.log(iterations[x][y][z]);
+  return ipe;
 }
