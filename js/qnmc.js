@@ -15,7 +15,7 @@ function quineMcCluskey(terminos) {
   iterations.push(item)
   console.log(iterations[0]);
 
-  while (bandera==false) {
+  while (!bandera) {
 
     item = iterations[it];
     var buffer =[];
@@ -36,11 +36,12 @@ function quineMcCluskey(terminos) {
                 t.fp.sort((a, b)=> a-b);
                 addTerm(t,buffer,i);
               }
-    bandera = item_equals(buffer);
-
-    iterations.push(buffer);
-    it++;
-    console.log(iterations[it]);
+    if (buffer.length > 0) {
+      iterations.push(buffer);
+      it++;
+      console.log(iterations[it]);
+    }else {
+      bandera = true;
+    }
   }
-
 }

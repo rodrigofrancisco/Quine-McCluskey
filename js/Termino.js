@@ -58,10 +58,3 @@ function diffPotencia2(mp1,mp2) {
   else
     return false;
 }
-
-function item_equals(buffer) {
-  for (var i = 0; i < buffer.length-1; i++)
-    if(JSON.stringify(buffer[i].mp) === JSON.stringify(buffer[i+1].mp))
-      return true;
-  return false;
-}
