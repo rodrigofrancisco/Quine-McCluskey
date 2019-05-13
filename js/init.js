@@ -19,7 +19,7 @@ function init() {
   /*Iniciamos el Quine-McCluskey con un arreglo que contiene los minterminos y
     los dont care juntos ya que el método sabe que hacer */
   if(minterm.length > 0)
-    quineMcCluskey(minterm.concat(dontcare));
+    quineMcCluskey(minterm,dontcare);
   else alert("Debe haber por lo menos 1 término");
 
 }

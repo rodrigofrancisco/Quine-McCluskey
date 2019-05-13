@@ -1,5 +1,6 @@
-function quineMcCluskey(terminos) {
+function quineMcCluskey(minterm,dontcare) {
   /* This are auxiliary arrays */
+  var terminos = minterm.concat(dontcare);
   var item = [];
   var iterations = [];
   var it = 0;
@@ -50,4 +51,10 @@ function quineMcCluskey(terminos) {
   //console.log(iterations);
   ipe = searchForIPE(iterations);
   console.log(ipe);
+
+  ipe_wdc = deleteDontCare(ipe,dontcare);
+  console.log('sin dont care',ipe_wdc);
+
+  ips = searchForIPS(ipe_wdc);
+
 }
