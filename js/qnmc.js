@@ -50,11 +50,10 @@ function quineMcCluskey(minterm,dontcare) {
   }
   //console.log(iterations);
   ipe = searchForIPE(iterations);
-  console.log(ipe);
 
   ipe_wdc = deleteDontCare(ipe,dontcare);
   console.log('sin dont care',ipe_wdc);
 
-  ips = searchForIPS(ipe_wdc);
+  //ips = searchForIPS(ipe_wdc);
 
 }

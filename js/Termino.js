@@ -84,9 +84,22 @@ function deleteDontCare(ipe,dontcare){
       if(t.mp.indexOf(dontcare[i])!= -1)
         t.mp.splice( t.mp.indexOf(dontcare[i]), 1 );
 
+  deleteEmptyTerms(ipe_wdc);
+
   return ipe_wdc;
 }
 
+function deleteEmptyTerms(ipe_wdc) {
+  empty = []
+  for (var i = 0; i < ipe_wdc.length; i++)
+    if(ipe_wdc[i].mp.length == 0)
+      empty.push(i)
+  for (var i = 0; i < empty.length; i++)
+    ipe_wdc.splice(empty[0],1);
+
+}
+
+/*Not working yet*/
 function searchForIPS(ipe_wdc) {
   var ips = []
 
