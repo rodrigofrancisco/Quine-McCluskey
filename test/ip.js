@@ -2,36 +2,54 @@
   ES LA ULTIMA PARTE DEL ALGORITMO DE QUINE McCluskey
 */
 function prueba() {
+  minterms = [4,8,10,11,12,15]
   let implicantes = [
-    [4,12],
-    [10,11,15],
-    [8,10,11],
-    [8,10,12]
+    //[4,12],
+    //[10,11,15],
+    //[8,10,11],
+    //[8,10,12]
+    [1,3],
+    [1,5],
+    [2,3],
+    [4,5]
   ];
-  let indxipe = []
-  //primero buscamos los implicantes primos esenciales
-  for (let imp1 in implicantes) {
-    flag = false;
-    for (var imp2 in implicantes)
-      //console.log("aar1",implicantes[imp1]);
-      //console.log("aar2",implicantes[imp2]);
-      if (!arraysEqual(implicantes[imp1],implicantes[imp2]))
-        for (var i = 0; i < implicantes[imp2].length; i++)
-          if(implicantes[imp1].includes(implicantes[imp2]))
-            flag = true
-    if(flag == false)
-      indxipe.push(imp1)
-  }
-  console.log(indxipe)
+
+  all = []
+  contadores = []
+
+  for (let i = 0; i < minterms.length; i++)
+    contadores.push(0)
+
+  for (ip of implicantes)
+    for (i of ip)
+      all.push(i)
+
+  all.sort((a,b)=>a-b)
+
+  for (let i = 0; i< minterms.length; i++)
+    for (j of all)
+      if (minterms[i] == j)
+        contadores[i]++
+
+  mint_esenciales = []
+  for (let i = 0; i < contadores.length; i++)
+    if (contadores[i] == 1)
+      mint_esenciales.push(minterms[i])
+
+  ipe = []
+
+  for (mt of mint_esenciales)
+    for (let i = 0; i< implicantes.length; i++)
+      if(searchMinterm(implicantes[i],mt))
+        ipe.push(implicantes[i])
+
+  console.log(ipe);
+
 }
 
-function arraysEqual(arr1, arr2) {
-    if(arr1.length !== arr2.length)
-        return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i])
-            return false;
-    }
-
-    return true;
+function searchMinterm(arr,minterm) {
+  for (t of arr)
+    if (t == minterm)
+      return true;
+  return false
 }
