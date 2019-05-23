@@ -2,7 +2,9 @@
   ES LA ULTIMA PARTE DEL ALGORITMO DE QUINE McCluskey
 */
 function prueba() {
-  minterms = [4,8,10,11,12,15]
+  //minterms = [4,8,10,11,12,15]
+  minterms = [1,2,3,4,5]
+  // minterms = [0,1,3,7,8,9,11,15]
   let implicantes = [
     //[4,12],
     //[10,11,15],
@@ -12,6 +14,9 @@ function prueba() {
     [1,5],
     [2,3],
     [4,5]
+    // [0,1,8,9],
+    // [3,7,11,15],
+    // [1,3,9,11]
   ];
 
   all = []
@@ -36,6 +41,8 @@ function prueba() {
     if (contadores[i] == 1)
       mint_esenciales.push(minterms[i])
 
+  console.log("mines",mint_esenciales);
+
   ipe = []
 
   for (mt of mint_esenciales)
@@ -43,7 +50,13 @@ function prueba() {
       if(searchMinterm(implicantes[i],mt))
         ipe.push(implicantes[i])
 
-  console.log(ipe);
+  ips = []
+  for (impl of implicantes)
+    for (a  of ipe)
+      if (!arraysEqual(impl,a))
+        ips.push(a)
+
+  console.log("ips",ips);
 
 }
 
@@ -52,4 +65,15 @@ function searchMinterm(arr,minterm) {
     if (t == minterm)
       return true;
   return false
+}
+
+function arraysEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+    }
+
+    return true;
 }
