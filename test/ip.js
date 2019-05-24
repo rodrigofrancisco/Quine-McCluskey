@@ -49,7 +49,7 @@ function prueba() {
     for (let i = 0; i< implicantes.length; i++)
       if(searchMinterm(implicantes[i],mt))
         ipe.push(implicantes[i])
-
+  console.log("ipe",ipe);
   ips = []
   for (impl of implicantes)
     for (a  of ipe)
