@@ -43,13 +43,16 @@ function prueba2() {
   ];
   let nipe3 = [ [1,3,9,11] ];
 
-
-  minimizarmas(minterms2,implicantes2,ipe2,nipe2)
+  minimizarmas(minterms3,implicantes3,ipe3,nipe3)
 
 }
 
 function minimizarmas(minterms,implicantes,ipe,nipe) {
 
+  let cp_nipe = [];
+  for (m of nipe) {
+    cp_nipe.push(m.slice())
+  }
 
   for (imp  of ipe)
     for (a  of imp)
@@ -62,7 +65,7 @@ function minimizarmas(minterms,implicantes,ipe,nipe) {
           }
       }
 
-  console.log(nipe);
+  console.log("nipe",nipe);
 
   /*
     SE ANALIZAN TRES CASO BASE PRINCIPALES
@@ -73,13 +76,10 @@ function minimizarmas(minterms,implicantes,ipe,nipe) {
 
     * SI LONGITUD ES DIF.
   */
-
+  complete_solv = ipe
   solv1 = []
 
-  if (allarraysEmpty(nipe)) {
-    console.log("hasta aqui acaba el algoritmo, regresar ipe[]");
-  }
-  else {
+  if (!allarraysEmpty(nipe)) {
     repeatedT=repeatedElements(nipe)
     for (r of repeatedT)
       for (m of nipe)
@@ -91,14 +91,20 @@ function minimizarmas(minterms,implicantes,ipe,nipe) {
     if (allarraysEmpty(nipe)){
       // regresar el que sea como la respuesta
       console.log("La minimizacion es el que sea!");
-      solv1.push(nipe[0])
+      solv1.push(cp_nipe[0])
     }else {
-      for (m of nipe)
-        if (m.length > 0)
-          solv1.push(m)
+      for (let j = 0; j < nipe.length; j++)
+        if (nipe[j].length > 0)
+          solv1.push(cp_nipe[j])
     }
   }
-  console.log("termino!",solv1);
+  console.log("solv1!",solv1);
+
+  for (s of solv1) {
+    complete_solv.push(s)
+  }
+
+  console.log("solucion completa",complete_solv);
 }
 
 function repeatedElements(nipe) {
