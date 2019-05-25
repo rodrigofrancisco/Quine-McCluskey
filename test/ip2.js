@@ -1,35 +1,55 @@
 function prueba2() {
-  //minterms = [1,2,3,4,5]
-  //minterms = [2,3,7,9,11,13]
-  minterms = [0,1,3,7,8,9,11,15]
-  let implicantes = [
-    // [1,3],
-    // [1,5],
-    // [2,3],
-    // [4,5]
-    // [2,3,11],
-    // [3,7,11],
-    // [3,9,11],
-    // [9,11,13]
+  let minterms1 = [1,2,3,4,5]
+  let minterms2 = [2,3,7,9,11,13]
+  let minterms3 = [0,1,3,7,8,9,11,15]
+  let minterms4 = [4,8,10,11,12,15]
+  let implicantes1 = [
+    [1,3],
+    [1,5],
+    [2,3],
+    [4,5]
+  ]
+  let implicantes2 = [
+    [2,3,11],
+    [3,7,11],
+    [3,9,11],
+    [9,11,13]
+
+  ];
+  let implicantes3 = [
     [0,1,8,9],
-    [1,3,8,11],
+    [1,3,9,11],
     [3,7,11,15]
   ];
-  let ipe = [
-    // [2,3],
-    // [4,5]
-    // [2,3,11],
-    // [3,7,11]
+  let ipe1 = [
+    [2,3],
+    [4,5]
+  ];
+  let ipe2 = [
+    [2,3,11],
+    [3,7,11],
+    [9,11,13]
+  ];
+  let ipe3 = [
     [0,1,8,9],
     [3,7,11,15]
   ];
-  let nipe = [
-    // [1,3],
-    // [1,5]
-    // [3,9,11],
-    // [9,11,13]
-    [1,3,9,11]
+  let nipe1 = [
+    [1,3],
+    [1,5]
   ];
+  let nipe2 = [
+    [3,9,11]
+  ];
+  let nipe3 = [ [1,3,9,11] ];
+
+
+  minimizarmas(minterms2,implicantes2,ipe2,nipe2)
+
+}
+
+function minimizarmas(minterms,implicantes,ipe,nipe) {
+
 
   for (imp  of ipe)
     for (a  of imp)
@@ -54,21 +74,65 @@ function prueba2() {
     * SI LONGITUD ES DIF.
   */
 
+  solv1 = []
 
-  let allEmpty = true
-  for (imp  of nipe)
-    if (imp.length > 0)
-      allEmpty = false
-
-  if (allEmpty) {
+  if (allarraysEmpty(nipe)) {
     console.log("hasta aqui acaba el algoritmo, regresar ipe[]");
   }
   else {
-    
+    repeatedT=repeatedElements(nipe)
+    for (r of repeatedT)
+      for (m of nipe)
+        if (searchMinterm(m,r)){
+          let index =m.indexOf(a)
+           if (index > -1)
+             m.splice(index, 1);
+        }
+    if (allarraysEmpty(nipe)){
+      // regresar el que sea como la respuesta
+      console.log("La minimizacion es el que sea!");
+      solv1.push(nipe[0])
+    }else {
+      for (m of nipe)
+        if (m.length > 0)
+          solv1.push(m)
+    }
   }
+  console.log("termino!",solv1);
+}
 
+function repeatedElements(nipe) {
+  all = []
+  for (ar of nipe)
+    for (a  of ar)
+      all.push(a)
+  console.log(all);
+  let unique = [...new Set(all)];
+  console.log("uniques",unique);
 
+  contadores = []
+  for (let i = 0; i < unique.length; i++)
+    contadores.push(0)
 
+  for (let i = 0; i < unique.length; i++)
+    for (a  of all)
+      if (unique[i] == a)
+       contadores[i]++;
+
+  repeated = []
+  for (let i = 0; i < contadores.length; i++)
+    if (contadores[i] > 1)
+      repeated.push(unique[i])
+
+  return repeated
+
+}
+
+function allarraysEmpty(nipe) {
+  for (imp  of nipe)
+    if (imp.length > 0)
+      return false;
+  return true;
 }
 
 function searchMinterm(arr,minterm) {
@@ -76,4 +140,29 @@ function searchMinterm(arr,minterm) {
     if (t == minterm)
       return true;
   return false
+}
+
+function allSameLen(arr) {
+  lens = []
+  for (a of arr)
+    lens.push(a.length)
+
+  let first = lens[0]
+  for (let i = 1; i < lens.length; i++)
+    if(first != lens[i])
+      return false;
+
+  return true;
+
+}
+
+function arraysEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+    }
+
+    return true;
 }
