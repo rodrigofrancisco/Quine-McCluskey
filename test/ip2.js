@@ -1,4 +1,4 @@
-function prueba2(implicantes,ipe, ips, minterms) {
+function prueba2(implicantes,ipe,ips,minterms) {
   // let minterms1 = [1,2,3,4,5]
   // let minterms2 = [2,3,7,9,11,13]
   // let minterms3 = [0,1,3,7,8,9,11,15]
@@ -44,19 +44,19 @@ function prueba2(implicantes,ipe, ips, minterms) {
   // let nipe3 = [ [1,3,9,11] ];
 
   //minimizarmas(minterms,implicantes,ipe,nipe3)
-  minimizarmas(minterms,implicantes,ipe,ips)
+  minimizarmas(implicantes,ipe,ips,minterms)
 
 }
 
-function minimizarmas(minterms,implicantes,ipe,nipe) {
+function minimizarmas(implicantes,ipe,nipe,minterms) {
 
   let cp_nipe = [];
   for (m of nipe) {
     cp_nipe.push(m.slice())
   }
 
-  for (imp  of ipe)
-    for (a  of imp)
+  for (imp of ipe)
+    for (a of imp)
       for (imp2 of nipe) {
           if(searchMinterm(imp2,a)) {
             //console.log("el ipe ",a,"esta en ",imp2);

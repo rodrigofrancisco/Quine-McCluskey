@@ -4,7 +4,7 @@ function quineMcCluskey(minterm,dontcare) {
   var item = [];
   var iterations = [];
   var it = 0;
-  var ipe = []
+  var ipf = []
   var flag = false;
 
   /** Creating initial group */
@@ -49,11 +49,12 @@ function quineMcCluskey(minterm,dontcare) {
 
   }
   //console.log(iterations);
-  ipe = searchForIPE(iterations);
+  ipf = searchForIPE(iterations);
 
-  ipe_wdc = deleteDontCare(ipe,dontcare);
-  console.log('sin dont care',ipe_wdc);
+  ipe_wdc = deleteDontCare(ipf,dontcare);
+  console.log('sind',ipe_wdc);
 
-  //ips = searchForIPS(ipe_wdc);
+  //ipe_wdc = implicantes
+  searchForIPS(ipe_wdc,minterm);
 
 }

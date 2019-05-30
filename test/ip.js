@@ -1,23 +1,23 @@
 /*ESTA PRUEBA ES PAR SACAR LOS IMPLICANTES PRIMOS ESENCIALES
   ES LA ULTIMA PARTE DEL ALGORITMO DE QUINE McCluskey
 */
-function prueba() {
+function searchForIPS(implicantes,minterms) {
   //minterms = [4,8,10,11,12,15]
-  minterms = [1,2,3,4,5]
+  //minterms = [1,2,3,4,5]
   // minterms = [0,1,3,7,8,9,11,15]
-  let implicantes = [
+  //let implicantes = [
     //[4,12],
     //[10,11,15],
     //[8,10,11],
     //[8,10,12]
-    [1,3],
-    [1,5],
-    [2,3],
-    [4,5]
+    //[1,3],
+    //[1,5],
+    //[2,3],
+    //[4,5]
     // [0,1,8,9],
     // [3,7,11,15],
     // [1,3,9,11]
-  ];
+  //];
 
   all = []
   contadores = []
@@ -26,7 +26,7 @@ function prueba() {
     contadores.push(0)
 
   for (ip of implicantes)
-    for (i of ip)
+    for (i of ip.mp)
       all.push(i)
 
   all.sort((a,b)=>a-b)
@@ -44,25 +44,31 @@ function prueba() {
   console.log("mines",mint_esenciales);
 
   ipe = []
-
   for (mt of mint_esenciales)
     for (let i = 0; i< implicantes.length; i++)
-      if(searchMinterm(implicantes[i],mt))
-        ipe.push(implicantes[i])
+      if(searchMinterm(implicantes[i].mp,mt))
+        if(!isAlreadyInIPE(implicantes[i].mp,ipe))
+          ipe.push(implicantes[i])
+
 
   console.log("ipe",ipe);
 
 
-  ips = implicantes
-  for (impl of ips)
-    for (a  of ipe)
-      if (arraysEqual(impl,a))
-        //ips.push(a)
-        ips.splice(ips.indexOf(impl))
+  ips = []
+
+  for (a of implicantes) {
+    ips.push(a)
+  }
+
+
+  for (impl of implicantes)
+    for (a of ipe)
+      if(arraysEqual(impl.mp,a.mp))
+        ips.splice(ips.indexOf(impl),1)
 
   console.log("ips",ips);
 
-  //prueba2(implicantes,ipe, ips,minterms)
+  minimizarmas(implicantes,ipe, ips,minterms)
 
 }
 
@@ -70,6 +76,14 @@ function searchMinterm(arr,minterm) {
   for (t of arr)
     if (t == minterm)
       return true;
+  return false
+}
+
+function isAlreadyInIPE(imp,ipe){
+  for (it  of ipe)
+    if (arraysEqual(it.mp,imp))
+      return true
+
   return false
 }
 
