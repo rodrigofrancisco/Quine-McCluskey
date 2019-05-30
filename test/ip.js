@@ -68,7 +68,7 @@ function searchForIPS(implicantes,minterms) {
 
   console.log("ips",ips);
 
-  minimizarmas(implicantes,ipe, ips,minterms)
+  minimizarmas(minterms,implicantes,ipe,ips)
 
 }
 

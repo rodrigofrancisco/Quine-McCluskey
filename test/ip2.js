@@ -1,14 +1,14 @@
-function prueba2(implicantes,ipe,ips,minterms) {
-  // let minterms1 = [1,2,3,4,5]
+function prueba2(/*implicantes,ipe,ips,minterms*/) {
+  let minterms1 = [1,2,3,4,5]
   // let minterms2 = [2,3,7,9,11,13]
   // let minterms3 = [0,1,3,7,8,9,11,15]
   // let minterms4 = [4,8,10,11,12,15]
-  // let implicantes1 = [
-  //   [1,3],
-  //   [1,5],
-  //   [2,3],
-  //   [4,5]
-  // ]
+  let implicantes1 = [
+    [1,3],
+    [1,5],
+    [2,3],
+    [4,5]
+  ]
   // let implicantes2 = [
   //   [2,3,11],
   //   [3,7,11],
@@ -21,10 +21,10 @@ function prueba2(implicantes,ipe,ips,minterms) {
   //   [1,3,9,11],
   //   [3,7,11,15]
   // ];
-  // let ipe1 = [
-  //   [2,3],
-  //   [4,5]
-  // ];
+  let ipe1 = [
+     [2,3],
+     [4,5]
+  ];
   // let ipe2 = [
   //   [2,3,11],
   //   [3,7,11],
@@ -34,60 +34,60 @@ function prueba2(implicantes,ipe,ips,minterms) {
   //   [0,1,8,9],
   //   [3,7,11,15]
   // ];
-  // let nipe1 = [
-  //   [1,3],
-  //   [1,5]
-  // ];
+  let nipe1 = [
+    [1,3],
+    [1,5]
+  ];
   // let nipe2 = [
   //   [3,9,11]
   // ];
   // let nipe3 = [ [1,3,9,11] ];
 
-  //minimizarmas(minterms,implicantes,ipe,nipe3)
-  minimizarmas(implicantes,ipe,ips,minterms)
+  minimizarmas(minterms1,implicantes1,ipe1,nipe1)
+  //minimizarmas(implicantes,ipe,ips,minterms)
 
 }
 
-function minimizarmas(implicantes,ipe,nipe,minterms) {
+function minimizarmas(minterms,implicantes,ipe,nipe) {
 
   let cp_nipe = [];
+
   for (m of nipe) {
-    cp_nipe.push(m.slice())
+    cp_nipe.push(cloneObject(m))
   }
 
+  /*A los terminos que no son imp. primos esenciales, se les
+   quita todo aquel termino que tenga este en los ipe y en ellos mismos.
+  */
   for (imp of ipe)
-    for (a of imp)
+    for (a of imp.mp)
       for (imp2 of nipe) {
-          if(searchMinterm(imp2,a)) {
+          if(searchMinterm(imp2.mp,a)) {
             //console.log("el ipe ",a,"esta en ",imp2);
-            let index =imp2.indexOf(a)
+            let index =imp2.mp.indexOf(a)
              if (index > -1)
-               imp2.splice(index, 1);
+               imp2.mp.splice(index, 1);
           }
       }
 
   console.log("nipe",nipe);
-
   /*
     SE ANALIZAN TRES CASO BASE PRINCIPALES
-
     * SI LONGITUD ES CERO (DE TODOS)
-
     * SI LONGITUD ES LA MISMA Y SUS ELEMENTOS SON IGUALES
-
     * SI LONGITUD ES DIF.
   */
-  complete_solv = ipe
+
   solv1 = []
 
   if (!allarraysEmpty(nipe)) {
-    repeatedT=repeatedElements(nipe)
-    for (r of repeatedT)
-      for (m of nipe)
-        if (searchMinterm(m,r)){
-          let index =m.indexOf(a)
+     repeatedT=repeatedElements(nipe)
+     for (r of repeatedT)
+       for (m of nipe)
+        if (searchMinterm(m.mp,r)){
+          let index =m.mp.indexOf(a)
            if (index > -1)
-             m.splice(index, 1);
+             m.mp.splice(index, 1);
         }
     if (allarraysEmpty(nipe)){
       // regresar el que sea como la respuesta
@@ -101,6 +101,7 @@ function minimizarmas(implicantes,ipe,nipe,minterms) {
   }
   console.log("solv1!",solv1);
 
+  complete_solv = ipe
   for (s of solv1) {
     complete_solv.push(s)
   }
@@ -111,7 +112,7 @@ function minimizarmas(implicantes,ipe,nipe,minterms) {
 function repeatedElements(nipe) {
   all = []
   for (ar of nipe)
-    for (a  of ar)
+    for (a  of ar.mp)
       all.push(a)
   console.log(all);
   let unique = [...new Set(all)];
@@ -137,7 +138,7 @@ function repeatedElements(nipe) {
 
 function allarraysEmpty(nipe) {
   for (imp  of nipe)
-    if (imp.length > 0)
+    if (imp.mp.length > 0)
       return false;
   return true;
 }
@@ -172,4 +173,12 @@ function arraysEqual(arr1, arr2) {
     }
 
     return true;
+}
+
+function cloneObject(t){
+  new_t = new Termino()
+  new_t.fp = t.fp //estos nunca son afectados
+  new_t.mp =t.mp.slice()
+
+  return new_t
 }
