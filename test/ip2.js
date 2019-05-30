@@ -1,49 +1,50 @@
-function prueba2() {
-  let minterms1 = [1,2,3,4,5]
-  let minterms2 = [2,3,7,9,11,13]
-  let minterms3 = [0,1,3,7,8,9,11,15]
-  let minterms4 = [4,8,10,11,12,15]
-  let implicantes1 = [
-    [1,3],
-    [1,5],
-    [2,3],
-    [4,5]
-  ]
-  let implicantes2 = [
-    [2,3,11],
-    [3,7,11],
-    [3,9,11],
-    [9,11,13]
+function prueba2(implicantes,ipe, ips, minterms) {
+  // let minterms1 = [1,2,3,4,5]
+  // let minterms2 = [2,3,7,9,11,13]
+  // let minterms3 = [0,1,3,7,8,9,11,15]
+  // let minterms4 = [4,8,10,11,12,15]
+  // let implicantes1 = [
+  //   [1,3],
+  //   [1,5],
+  //   [2,3],
+  //   [4,5]
+  // ]
+  // let implicantes2 = [
+  //   [2,3,11],
+  //   [3,7,11],
+  //   [3,9,11],
+  //   [9,11,13]
+  //
+  // ];
+  // let implicantes3 = [
+  //   [0,1,8,9],
+  //   [1,3,9,11],
+  //   [3,7,11,15]
+  // ];
+  // let ipe1 = [
+  //   [2,3],
+  //   [4,5]
+  // ];
+  // let ipe2 = [
+  //   [2,3,11],
+  //   [3,7,11],
+  //   [9,11,13]
+  // ];
+  // let ipe3 = [
+  //   [0,1,8,9],
+  //   [3,7,11,15]
+  // ];
+  // let nipe1 = [
+  //   [1,3],
+  //   [1,5]
+  // ];
+  // let nipe2 = [
+  //   [3,9,11]
+  // ];
+  // let nipe3 = [ [1,3,9,11] ];
 
-  ];
-  let implicantes3 = [
-    [0,1,8,9],
-    [1,3,9,11],
-    [3,7,11,15]
-  ];
-  let ipe1 = [
-    [2,3],
-    [4,5]
-  ];
-  let ipe2 = [
-    [2,3,11],
-    [3,7,11],
-    [9,11,13]
-  ];
-  let ipe3 = [
-    [0,1,8,9],
-    [3,7,11,15]
-  ];
-  let nipe1 = [
-    [1,3],
-    [1,5]
-  ];
-  let nipe2 = [
-    [3,9,11]
-  ];
-  let nipe3 = [ [1,3,9,11] ];
-
-  minimizarmas(minterms3,implicantes3,ipe3,nipe3)
+  //minimizarmas(minterms,implicantes,ipe,nipe3)
+  minimizarmas(minterms,implicantes,ipe,ips)
 
 }
 

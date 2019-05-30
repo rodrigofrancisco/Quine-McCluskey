@@ -49,14 +49,20 @@ function prueba() {
     for (let i = 0; i< implicantes.length; i++)
       if(searchMinterm(implicantes[i],mt))
         ipe.push(implicantes[i])
+
   console.log("ipe",ipe);
-  ips = []
-  for (impl of implicantes)
+
+
+  ips = implicantes
+  for (impl of ips)
     for (a  of ipe)
-      if (!arraysEqual(impl,a))
-        ips.push(a)
+      if (arraysEqual(impl,a))
+        //ips.push(a)
+        ips.splice(ips.indexOf(impl))
 
   console.log("ips",ips);
+
+  //prueba2(implicantes,ipe, ips,minterms)
 
 }
 
