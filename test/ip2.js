@@ -1,52 +1,131 @@
-function prueba2(/*implicantes,ipe,ips,minterms*/) {
-  let minterms1 = [1,2,3,4,5]
-  // let minterms2 = [2,3,7,9,11,13]
-  // let minterms3 = [0,1,3,7,8,9,11,15]
-  // let minterms4 = [4,8,10,11,12,15]
-  let implicantes1 = [
-    [1,3],
-    [1,5],
-    [2,3],
-    [4,5]
-  ]
-  // let implicantes2 = [
-  //   [2,3,11],
-  //   [3,7,11],
-  //   [3,9,11],
-  //   [9,11,13]
-  //
-  // ];
-  // let implicantes3 = [
-  //   [0,1,8,9],
-  //   [1,3,9,11],
-  //   [3,7,11,15]
-  // ];
-  let ipe1 = [
-     [2,3],
-     [4,5]
-  ];
-  // let ipe2 = [
-  //   [2,3,11],
-  //   [3,7,11],
-  //   [9,11,13]
-  // ];
-  // let ipe3 = [
-  //   [0,1,8,9],
-  //   [3,7,11,15]
-  // ];
-  let nipe1 = [
-    [1,3],
-    [1,5]
-  ];
-  // let nipe2 = [
-  //   [3,9,11]
-  // ];
-  // let nipe3 = [ [1,3,9,11] ];
+/**
+  Esta función devuelve todas las iteraciones de
+  la primera parte del metodo de quine McCluskey
+*/
+function getIterations(minterm,dontcare) {
+  /* This are auxiliary variavles */
+  var terminos = minterm.concat(dontcare);
+  var item = [];
+  var iterations = [];
+  var it = 0;
+  var ipf = []
+  var flag = false;
 
-  minimizarmas(minterms1,implicantes1,ipe1,nipe1)
-  //minimizarmas(implicantes,ipe,ips,minterms)
+  /** Creating initial group */
+  for(var i = 0; i< terminos.length; i++){
+      let pos = contarUnos(terminos[i]);
+      let t = new Termino();
+      t.add_mp(terminos[i]);
+      addTerm(t,item,pos);
+  }
+  iterations.push(item)
+
+  while (!flag) {
+    item = iterations[it];
+    var buffer =[];
+    /** Obtaining prime implicants */
+    for(var i = 0 ; i < item.length-1 ; i++) if(item[i] != null)
+      for( var j = 0 ; j < item[i].length ; j++ )
+        for(var k = 0 ; k < item[i+1].length; k++ )
+          if (fp_equals(item[i][j].fp,item[i+1][k].fp)
+            && diffsPotencia2(item[i][j].mp,item[i+1][k].mp)) {
+            item[i][j].used = true;
+            item[i+1][k].used = true;
+
+            let t = new Termino();
+            t.mp = item[i][j].mp.concat(item[i+1][k].mp)
+            t.fp =item[i][j].fp.slice()
+            t.add_fp(item[i+1][k].mp[0]-item[i][j].mp[0])
+            t.mp.sort((a, b)=> a-b);
+            t.fp.sort((a, b)=> a-b);
+            /* i is the position of new term in new iteration*/
+            addTerm(t,buffer,i);
+          }
+    if (buffer.length > 0) {
+      iterations.push(buffer);
+      it++;
+    }else flag = true;
+
+  }
+  return iterations
 
 }
+
+function searchForIP(iterations) {
+  let ipe = [];
+  for (var it of iterations)
+    for (var gp of it) if(gp !=null)
+      for (var t of gp) if (!isInIPE(ipe,t) && !t.used)
+          ipe.push(t)
+  return ipe;
+}
+
+function deleteDontCare(ip,dontcare){
+  var ip_wdc = ip.slice(0)
+
+  for (var i = 0; i < dontcare.length; i++)
+    for (let t of ip_wdc)
+      if(t.mp.indexOf(dontcare[i])!= -1)
+        t.mp.splice( t.mp.indexOf(dontcare[i]), 1 );
+
+  deleteEmptyTerms(ip_wdc);
+
+  return ip_wdc;
+}
+
+function searchForIPS(implicantes,minterms) {
+
+  all = []
+  contadores = []
+
+  for (let i = 0; i < minterms.length; i++)
+    contadores.push(0)
+
+  for (ip of implicantes)
+    for (i of ip.mp)
+      all.push(i)
+
+  all.sort((a,b)=>a-b)
+
+  for (let i = 0; i< minterms.length; i++)
+    for (j of all)
+      if (minterms[i] == j)
+        contadores[i]++
+
+  mint_esenciales = []
+  for (let i = 0; i < contadores.length; i++)
+    if (contadores[i] == 1)
+      mint_esenciales.push(minterms[i])
+
+  console.log("mines",mint_esenciales);
+
+  ipe = []
+  for (mt of mint_esenciales)
+    for (let i = 0; i< implicantes.length; i++)
+      if(searchMinterm(implicantes[i].mp,mt))
+        if(!isAlreadyInIPE(implicantes[i].mp,ipe))
+          ipe.push(implicantes[i])
+
+  console.log("ipe",ipe);
+
+  ips = []
+
+  for (a of implicantes) {
+    ips.push(a)
+  }
+
+  for (impl of implicantes)
+    for (a of ipe)
+      if(arraysEqual(impl.mp,a.mp))
+        ips.splice(ips.indexOf(impl),1)
+
+  console.log("ips",ips);
+
+  minimizarmas(minterms,implicantes,ipe,ips)
+
+}
+
+
 
 function minimizarmas(minterms,implicantes,ipe,nipe) {
 
@@ -107,78 +186,4 @@ function minimizarmas(minterms,implicantes,ipe,nipe) {
   }
 
   console.log("solucion completa",complete_solv);
-}
-
-function repeatedElements(nipe) {
-  all = []
-  for (ar of nipe)
-    for (a  of ar.mp)
-      all.push(a)
-  console.log(all);
-  let unique = [...new Set(all)];
-  console.log("uniques",unique);
-
-  contadores = []
-  for (let i = 0; i < unique.length; i++)
-    contadores.push(0)
-
-  for (let i = 0; i < unique.length; i++)
-    for (a  of all)
-      if (unique[i] == a)
-       contadores[i]++;
-
-  repeated = []
-  for (let i = 0; i < contadores.length; i++)
-    if (contadores[i] > 1)
-      repeated.push(unique[i])
-
-  return repeated
-
-}
-
-function allarraysEmpty(nipe) {
-  for (imp  of nipe)
-    if (imp.mp.length > 0)
-      return false;
-  return true;
-}
-
-function searchMinterm(arr,minterm) {
-  for (t of arr)
-    if (t == minterm)
-      return true;
-  return false
-}
-
-function allSameLen(arr) {
-  lens = []
-  for (a of arr)
-    lens.push(a.length)
-
-  let first = lens[0]
-  for (let i = 1; i < lens.length; i++)
-    if(first != lens[i])
-      return false;
-
-  return true;
-
-}
-
-function arraysEqual(arr1, arr2) {
-    if(arr1.length !== arr2.length)
-        return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i])
-            return false;
-    }
-
-    return true;
-}
-
-function cloneObject(t){
-  new_t = new Termino()
-  new_t.fp = t.fp //estos nunca son afectados
-  new_t.mp =t.mp.slice()
-
-  return new_t
 }

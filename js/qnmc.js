@@ -1,60 +1,12 @@
 function quineMcCluskey(minterm,dontcare) {
-  /* This are auxiliary arrays */
-  var terminos = minterm.concat(dontcare);
-  var item = [];
-  var iterations = [];
-  var it = 0;
-  var ipf = []
-  var flag = false;
 
-  /** Creating initial group */
-  for(var i = 0; i< terminos.length; i++){
-      let pos = contarUnos(terminos[i]);
-      let t = new Termino();
-      t.add_mp(terminos[i]);
-      addTerm(t,item,pos);
-  }
-  iterations.push(item)
-  //console.log(iterations[0]);
+  var iterations = getIterations(minterm,dontcare);
 
-  while (!flag) {
+  ip = searchForIP(iterations);
 
-    item = iterations[it];
-    var buffer =[];
+  ip_wdc = deleteDontCare(ip,dontcare);
+  console.log('sind',ip_wdc);
 
-    /** Obtaining prime implicants */
-    for(var i = 0 ; i < item.length-1 ; i++) if(item[i] != null)
-      for( var j = 0 ; j < item[i].length ; j++ )
-        for(var k = 0 ; k < item[i+1].length; k++ )
-          if (fp_equals(item[i][j].fp,item[i+1][k].fp)
-            && diffsPotencia2(item[i][j].mp,item[i+1][k].mp)) {
-            item[i][j].used = true;
-            item[i+1][k].used = true;
-
-            let t = new Termino();
-            t.mp = item[i][j].mp.concat(item[i+1][k].mp)
-            t.fp =item[i][j].fp.slice()
-            t.add_fp(item[i+1][k].mp[0]-item[i][j].mp[0])
-            t.mp.sort((a, b)=> a-b);
-            t.fp.sort((a, b)=> a-b);
-            /* i is the position of new term in new iteration*/
-            addTerm(t,buffer,i);
-          }
-
-    if (buffer.length > 0) {
-      iterations.push(buffer);
-      it++;
-      //console.log(iterations[it]);
-    }else flag = true;
-
-  }
-  //console.log(iterations);
-  ipf = searchForIPE(iterations);
-
-  ipe_wdc = deleteDontCare(ipf,dontcare);
-  console.log('sind',ipe_wdc);
-
-  //ipe_wdc = implicantes
-  searchForIPS(ipe_wdc,minterm);
+  searchForIPS(ip_wdc,minterm);
 
 }

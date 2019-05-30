@@ -14,6 +14,7 @@ class Termino {
   }
 }
 
+/** metodo auxliliares para obtener las iteraciones*/
 function contarUnos(numero) {
   var contador = 0;
   while (numero) {
@@ -59,14 +60,9 @@ function diffsPotencia2(mp1,mp2) {
     return false;
 }
 
-function searchForIPE(iterations) {
-  let ipe = [];
-  for (var it of iterations)
-    for (var gp of it) if(gp !=null)
-      for (var t of gp) if (!isInIPE(ipe,t) && !t.used)
-          ipe.push(t)
-  return ipe;
-}
+/**
+  Métodos auxiliares para Buscar los implicantes primos
+*/
 
 function isInIPE(ipe,t) {
   for (const tipe of ipe)
@@ -76,38 +72,12 @@ function isInIPE(ipe,t) {
   return false;
 }
 
-function deleteDontCare(ipe,dontcare){
-  var ipe_wdc = ipe.slice(0)
-
-  for (var i = 0; i < dontcare.length; i++)
-    for (let t of ipe_wdc)
-      if(t.mp.indexOf(dontcare[i])!= -1)
-        t.mp.splice( t.mp.indexOf(dontcare[i]), 1 );
-
-  deleteEmptyTerms(ipe_wdc);
-
-  return ipe_wdc;
-}
-
-function deleteEmptyTerms(ipe_wdc) {
+function deleteEmptyTerms(ip_wdc) {
   empty = []
-  for (var i = 0; i < ipe_wdc.length; i++)
-    if(ipe_wdc[i].mp.length == 0)
+  for (var i = 0; i < ip_wdc.length; i++)
+    if(ip_wdc[i].mp.length == 0)
       empty.push(i)
   for (var i = 0; i < empty.length; i++)
-    ipe_wdc.splice(empty[0],1);
+    ip_wdc.splice(empty[0],1);
 
-}
-
-/*Not working yet*/
-function searchForIPS(ipe_wdc) {
-  var ips = []
-
-  for (var i = 0; i < ipe_wdc.length; i++)
-    for (var j = 0; j < ipe_wdc.length; j++)
-      if(i != j)
-        for (var k = 0; k < ipe_wdc[i].mp.length; k++)
-          for (var m = 0; m < ipe_wdc[j].mp.length; m++)
-            if(ipe_wdc[i].mp[k] == ipe_wdc[j].mp[m])
-              ipe_wdc[i].used = true;
 }
