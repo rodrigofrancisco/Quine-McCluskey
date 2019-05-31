@@ -3,7 +3,9 @@ function printIterations(iterations,minterm,dontcare) {
   var numt = Math.ceil(Math.log2(terminos[terminos.length-1]))
   terminos.sort((a, b)=> a-b);
   console.log("imprimendo terminos",terminos);
-  var output = `<div class="col" >`;
+  var output = `<div class="col" >
+    <h2>Primera parte</h2>
+  `;
 
   for (var it of iterations){
     var contador = 0
