@@ -35,6 +35,8 @@ El método consta de dos pasos:
 
 ## Pseudocodigo
 
+**QUEDA PENDIENTE SU REVISIÓN**
+
 Para encontrar los implicantes primos
 
 ```shell
@@ -50,10 +52,4 @@ MIENTRAS que ...[Ahorita vemos]
     SI hay elementos sin usar se vuelven implicantes
     primos        
 
-```
-
-Para encontrar los implicantes primos esenciales
-
-```shell
-Nose aún
 ```
