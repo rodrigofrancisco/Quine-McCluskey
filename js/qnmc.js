@@ -1,6 +1,7 @@
 function quineMcCluskey(minterm,dontcare) {
 
   var iterations = getIterations(minterm,dontcare);
+  printIterations(iterations,minterm,dontcare)
 
   ip = searchForIP(iterations);
 
@@ -15,5 +16,7 @@ function quineMcCluskey(minterm,dontcare) {
   nip = searchForNIP(ip_wdc,minterm,ipe)
 
   solution = getIPEyIPS(minterm,ip_wdc,ipe,nip)
+
+
 
 }
