@@ -73,7 +73,7 @@ function deleteDontCare(ip,dontcare){
   return ip_wdc;
 }
 
-function searchForIPS(implicantes,minterms) {
+function searchForIPE(implicantes,minterms) {
 
   all = []
   contadores = []
@@ -108,26 +108,28 @@ function searchForIPS(implicantes,minterms) {
 
   console.log("ipe",ipe);
 
-  ips = []
+  return ipe;
+
+}
+
+function searchForNIP(implicantes,minterms,ipe) {
+  nip = []
 
   for (a of implicantes) {
-    ips.push(a)
+    nip.push(a)
   }
 
   for (impl of implicantes)
     for (a of ipe)
       if(arraysEqual(impl.mp,a.mp))
-        ips.splice(ips.indexOf(impl),1)
+        nip.splice(nip.indexOf(impl),1)
 
-  console.log("ips",ips);
+  console.log("nip",nip);
 
-  minimizarmas(minterms,implicantes,ipe,ips)
-
+  return nip;
 }
 
-
-
-function minimizarmas(minterms,implicantes,ipe,nipe) {
+function getIPEyIPS(minterms,implicantes,ipe,nipe) {
 
   let cp_nipe = [];
 
@@ -186,4 +188,7 @@ function minimizarmas(minterms,implicantes,ipe,nipe) {
   }
 
   console.log("solucion completa",complete_solv);
+
+  return complete_solv
+
 }
