@@ -64,8 +64,8 @@ function getLogicRep(nbin) {
 }
 
 function printSolRep(repsolution) {
-  var output = `<div class="col text-center">`;
-  output += `<h5>f =`;
+  var output = `<div class="col text-center solution-container">`;
+  output += `<h3 class="function-label" >f =`;
 
   for (let i = 0; i< repsolution.length; i++) {
     output += repsolution[i]
@@ -73,6 +73,6 @@ function printSolRep(repsolution) {
       output += "+";
   }
 
-  output += ` </h5></div>`;
+  output += ` </h3></div>`;
   document.getElementById('solution4').innerHTML = output
 }

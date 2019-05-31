@@ -59,3 +59,8 @@ footer {
   font-size: 150%;
   font-family: 'Petit Formal Script', cursive;
 }
+.solution-container{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: lightblue;
+}
