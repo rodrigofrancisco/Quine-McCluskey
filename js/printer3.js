@@ -54,7 +54,7 @@ function getLogicRep(nbin) {
 
   for (let i = 0; i< nbin_str.length; i++) {
     if(nbin_str[i] == '0')
-      rep.push(variables[i]+"'")
+      rep.push(variables[i] + "\u0305")
     else if (nbin_str[i] == '1')
       rep.push(variables[i])
   }
