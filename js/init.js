@@ -2,9 +2,17 @@ function init() {
   const input_minterm = document.getElementById('minterminos').value;
   const input_dontcare = document.getElementById('dontcare').value;
 
-  /*FALTA validar que los input solo contengan numeros y que esten sepa-
-    rados por comas y   que NO se repitan los elementos y que No esten vacias
-  */
+  const regex = /^([0-9]{1,2},)*([0-9]{1,2})$/;
+
+  if(!regex.test(input_minterm)){
+    alert("Los minterminos deben ser numeros separados por comas");
+    return;
+  }
+
+  if(!regex.test(input_dontcare)){
+    alert("Los dont care deben ser numeros separados por comas");
+    return;
+  }
 
   /*Los inputs los recibimos como string pero los guardamos como arrays y para ello separamos cada elemento y lo guardmos como number*/
   let minterm = []
