@@ -1,5 +1,5 @@
 function printIPEyNIP(ipe,nip,minterm) {
-  var output = `<div class="col" ><h2>Segunda parte parte</h2>`;
+  var output = `<div class="col" ><h2>Segunda parte</h2>`;
 
   output +=
   `     <table class="table">
